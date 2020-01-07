@@ -3,6 +3,7 @@ const bParser = require("body-parser");
 const path = require("path");
 const port = 3000;
 const ctrl = require("./ctrl");
+process.env.GOOGLE_APPLICATION_CREDENTIALS = './apikey/key.json';
 
 const app = express();
 app.use(bParser.json());
@@ -17,4 +18,4 @@ app.listen(port, () => {
 //   res.status(200).send(":" + port + " is watching you");
 // });
 
-app.get("/", ctrl.get);
+app.get("/voice", ctrl.get);

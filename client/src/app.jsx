@@ -23,10 +23,21 @@ class App extends React.Component {
     //   err => console.error(err)
     // );
   }
+  hdlAudio(){
+    var a=document.getElementById('audio');
+    a.src="http://localhost:3000/voice";
+    a.play();
+  }
   render() {
     return (
       <div id = "content" >
-        {this.state.load ? <div>Hello World</div> : <div></div>}
+        {this.state.load ? <div>
+          Hello World
+          <img src={require("../../asset/phonogragh.jpg")}/>
+          <audio id="audio"/>
+            {/* <source src="http://localhost:3000/voice" type="audio/mpeg"/> */}
+          <button onClick={this.hdlAudio.bind(this)}>ha!</button>
+        </div> : <div></div>}
       </div>
     );
   }
