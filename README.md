@@ -4,8 +4,8 @@
 
 ## Notes
 
-> File-loader 5.0.0 is not working, demoted to 4.2.0
-> Add-list feature is for development only. It's vulnerable to XSS attacks
+- File-loader 5.0.0 is not working, demoted to 4.2.0
+- Add-list feature is for development only. It's vulnerable to XSS attacks
 
 
 ## Development
