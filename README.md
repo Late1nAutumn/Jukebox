@@ -1,26 +1,12 @@
-# example
+# Jukebox
 
-> sample framework for easy startup
+> A cold-call dice connected to google text-to-speech cloud service
 
-## Related Projects
+## Notes
 
-  - (to be filled)
+> File-loader 5.0.0 is not working, demoted to 4.2.0
+> Add-list feature is for development only. It's vulnerable to XSS attacks
 
-## Table of Contents
-
-1. [Usage](#Usage)
-1. [Requirements](#requirements)
-1. [Development](#development)
-
-## Usage
-
-> No API provided by this module so far
-
-## Requirements
-
-An `nvmrc` file is included if using [nvm](https://github.com/creationix/nvm).
-
-- Node 6.13.0
 
 ## Development
 
@@ -28,10 +14,6 @@ An `nvmrc` file is included if using [nvm](https://github.com/creationix/nvm).
 
 From within the root directory:
 
-```sh
-git remote remove origin
-git remote add origin https://github.com/...
-```
 ```sh
 npm install
 npm run build
