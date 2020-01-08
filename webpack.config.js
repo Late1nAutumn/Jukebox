@@ -19,7 +19,7 @@ module.exports = {
       },
       {
       　test: /\.(jpg)$/,
-    　  loader: 'url-loader?limit=8192&name=asset/stars/[hash:8].[name].[ext]'
+    　  loader: 'url-loader?limit=8192&name=asset/[hash:8].[name].[ext]'
       }
     ],
   },
