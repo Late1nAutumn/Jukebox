@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import axios from "axios";
 import AddList from "./addList";
 
-const serverURL="http://localhost:3000";
+const serverURL="http://localhost:3050";
 
 class App extends React.Component {
   constructor(props) {
@@ -43,7 +43,9 @@ class App extends React.Component {
     if(this.state.rolling || i)
       setTimeout(()=>{this.rollingHigh(i)},j);
     else{
-      this.setState({portrait:this.state.list[temp].img||require("../asset/soundonly.jpg")});
+      this.setState({
+        portrait:this.state.list[temp].img||require("../asset/soundonly.jpg")
+      });
       var a=document.getElementById('audio');
       a.src=serverURL+"/voice/"+this.state.list[temp].name;
       a.play();
@@ -57,8 +59,10 @@ class App extends React.Component {
     axios.get(serverURL+'/list/'+this.state.album[a]).then(
       data => {
         this.setState({
+          roller:0,
           list: data.data,
-          page: a
+          page: a,
+          portrait:""
         });
       },
       err => console.error(err)
@@ -87,17 +91,23 @@ class App extends React.Component {
   }
   render() {
     return (
-      <div id = "content" >
-        {this.state.load ? <div>
+      <div className = "content" >
+        {this.state.load ? <div className = "content">
           <h1>{this.state.album[this.state.page]}</h1>
-          <h3>{this.state.list[this.state.roller].name}</h3>
-          {this.state.portrait?<img src={this.state.portrait}/>:<span/>}
-          <img src={require("../asset/bg.jpg")}/>
-          <audio id="audio"/>
+          {this.state.album.length>1?<button onClick={this.hdlNextPage.bind(this)}>next group</button>:<span/>}
+          <br/><br/>
+          <div className="img">
+            {this.state.portrait?
+              <img className="face" src={this.state.portrait}/>:
+              <img className="bg" src={require("../asset/bg.jpg")}/>}
+            {this.state.portrait?<span/>:<div className="spin"><div className="spintext">{this.state.album[this.state.page]}<br/>&nbsp;<br/>&nbsp;</div></div>}
+          </div>
+          <h1>{this.state.list[this.state.roller].name}</h1>
+          <audio id="audio"/><br/>
             {/* <source src="" type="audio/mpeg"/> */}
-          {this.state.album.length>1?<button onClick={this.hdlNextPage.bind(this)}>next collection</button>:<span/>}
           <button onClick={this.switchRoller.bind(this)}>{this.state.rolling?"STOP!":"ROLL!"}</button>
-          <button onClick={()=>{this.hdlAddPage(0)}}>AddList</button>
+          <br/>
+          <button className="addbutton" onClick={()=>{this.hdlAddPage(0)}}>AddList (dev only)</button>
         </div> : <AddList back={()=>{this.hdlAddPage(0)}}/>}
       </div>
     );

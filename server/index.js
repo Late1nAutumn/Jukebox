@@ -1,7 +1,7 @@
 const express = require("express");
 const bParser = require("body-parser");
 const path = require("path");
-const port = 3000;
+const port = 3050;
 const ctrl = require("./ctrl");
 process.env.GOOGLE_APPLICATION_CREDENTIALS = './apikey/key.json';
 

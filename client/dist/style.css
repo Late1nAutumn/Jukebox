@@ -1,0 +1,51 @@
+html,
+body,
+#app,
+.content {
+  width: 100%;
+  margin: auto;
+}
+body {
+  width: 95%;
+}
+.content,
+.img {
+  margin: auto;
+  text-align: center;
+}
+.img {
+  height: 450px;
+  position: relative;
+}
+.face,
+.bg {
+  max-height: 450px;
+}
+.addbutton {
+  margin-top: 150px;
+}
+.spin {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 200px;
+  width: 200px;
+}
+.spintext {
+  margin-top: -48px;
+  margin-left: -100%;
+  display: inline-block;
+  font-family: Sans-Serif;
+  font-size: 22px;
+  line-height: 160%;
+  color: white;
+  animation: spin 4s infinite linear;
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
