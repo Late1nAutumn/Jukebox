@@ -1,16 +1,14 @@
-// const db = require("../db");
 const fs = require('fs');
 const util = require('util');
+const path = require('path');
 const textToSpeech = require('@google-cloud/text-to-speech');
 
 module.exports = {
-  get: async function(req,res){
+  voice: async function(req,res){
     const client = new textToSpeech.TextToSpeechClient();
 
-    const text = 'test test test. forest is handsome';
-
     const request = {
-      input: {text: text},
+      input: {text: req.params.text},
       voice: {languageCode: 'en-US', ssmlGender: 'NEUTRAL'},
       audioConfig: {audioEncoding: 'MP3'},
     };
@@ -21,6 +19,48 @@ module.exports = {
     // await writeFile('output.mp3', response.audioContent, 'binary');
     // console.log('Audio content written to file: output.mp3');
     res.status(200).send(response.audioContent);
+  },
+
+  add:(req,res)=>{
+    // console.log(req.body);
+    if(!req.body || !req.params.name || req.body.length===0){
+      res.status(400).send("wrong format");
+      return;
+    }
+    fs.readFile(path.join(__dirname,'./mockDB/list/list.json'),"utf-8",(err,data)=>{
+      //ignore error
+      var update=false;
+      var temp=data?JSON.parse(data):[];
+      for(var i of temp)
+        if(i===req.params.name)
+          update=true;
+      if(!update) temp.push(req.params.name);
+
+      fs.writeFile(path.join(__dirname,'./mockDB/list/list.json'),JSON.stringify(temp),(err)=>{
+        if(err)res.status(400).send(err);
+        else{
+          fs.writeFile(path.join(__dirname,'./mockDB/list/list-'+req.params.name+'.json'),JSON.stringify(req.body),(err)=>{
+            if(err)res.status(400).send(err);
+            else res.status(201).send('list '+(update?"updated":"added"));
+          })
+        }
+      });
+    });
+  },
+
+  lists:(req,res)=>{
+    fs.readFile(path.join(__dirname,'./mockDB/list/list.json'),"utf-8",(err,data)=>{
+      if(err) res.status(400).send(err);
+      else res.status(200).send(data);
+    });
+  },
+
+  list:(req,res)=>{
+    fs.readFile(path.join(__dirname,'./mockDB/list/list-'+req.params.name+'.json'),"utf-8",(err,data)=>{
+      // console.log(data);
+      if(err) res.status(404).send(err);
+      else res.status(200).send(data);
+    });
   }
 };
 

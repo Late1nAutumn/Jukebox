@@ -18,4 +18,8 @@ app.listen(port, () => {
 //   res.status(200).send(":" + port + " is watching you");
 // });
 
-app.get("/voice", ctrl.get);
+app.post("/addlist/:name",ctrl.add);
+
+app.get("/voice/:text", ctrl.voice);
+app.get("/lists", ctrl.lists);
+app.get("/list/:name", ctrl.list);
