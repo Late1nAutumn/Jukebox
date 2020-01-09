@@ -15,18 +15,30 @@ class App extends React.Component {
       page:0,
       album:[],
       list:[{name:"",img:""}],
-      portrait:""
+      portrait:"",
+      remove:false
     };
     this.rollingHigh=this.rollingHigh.bind(this);
     this.hdlAddPage=this.hdlAddPage.bind(this);
+    this.switchRoller=this.switchRoller.bind(this);
   }
-  switchRoller(){
+  switchRoller(n){
     var temp=this.state.rolling;
-    this.setState({
-      rolling:!temp,
-      portrait:""
+    var obj={};
+    if(!temp){ //remove picked person
+      if(n){
+        var tempArr=this.state.list;
+        tempArr[this.state.roller]=tempArr.pop();
+        obj.list=tempArr;
+      }else{
+        obj.remove=true;
+      }
+    }
+    obj.rolling=!temp;
+    obj.portrait="";
+    this.setState(obj,()=>{
+      if(!temp) this.rollingHigh();
     });
-    if(!temp)this.rollingHigh();
     //todo: stop user spamming this button (debounce)
   }
   rollingHigh(n){
@@ -105,7 +117,7 @@ class App extends React.Component {
           <h1>{this.state.list[this.state.roller].name}</h1>
           <audio id="audio"/><br/>
             {/* <source src="" type="audio/mpeg"/> */}
-          <button onClick={this.switchRoller.bind(this)}>{this.state.rolling?"STOP!":"ROLL!"}</button>
+          <button onClick={()=>{this.switchRoller(this.state.remove)}}>{this.state.rolling?"STOP!":"ROLL!"}</button>
           <br/>
           <button className="addbutton" onClick={()=>{this.hdlAddPage(0)}}>AddList (dev only)</button>
         </div> : <AddList back={()=>{this.hdlAddPage(0)}}/>}
