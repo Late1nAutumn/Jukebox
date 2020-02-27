@@ -119,7 +119,7 @@ class App extends React.Component {
             {/* <source src="" type="audio/mpeg"/> */}
           <button onClick={()=>{this.switchRoller(this.state.remove)}}>{this.state.rolling?"STOP!":"ROLL!"}</button>
           <br/>
-          <button className="addbutton" onClick={()=>{this.hdlAddPage(0)}}>AddList (dev only)</button>
+          {/* <button className="addbutton" onClick={()=>{this.hdlAddPage(0)}}>AddList (dev only)</button> */}
         </div> : <AddList back={()=>{this.hdlAddPage(0)}}/>}
       </div>
     );
