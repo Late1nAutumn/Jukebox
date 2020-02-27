@@ -3,8 +3,6 @@ import ReactDOM from "react-dom";
 import axios from "axios";
 import AddList from "./addList";
 
-const serverURL="http://localhost:3050";
-
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -59,7 +57,7 @@ class App extends React.Component {
         portrait:this.state.list[temp].img||require("../asset/soundonly.jpg")
       });
       var a=document.getElementById('audio');
-      a.src=serverURL+"/voice/"+this.state.list[temp].name;
+      a.src="/voice/"+this.state.list[temp].name;
       a.play();
     }
   }
@@ -68,7 +66,7 @@ class App extends React.Component {
   }
   hdlNextPage(){
     var a=(this.state.page+1)%this.state.album.length;
-    axios.get(serverURL+'/list/'+this.state.album[a]).then(
+    axios.get('/list/'+this.state.album[a]).then(
       data => {
         this.setState({
           roller:0,
@@ -82,11 +80,11 @@ class App extends React.Component {
   }
   hdlAddPage(s){
     if(s){
-      axios.get(serverURL+'/lists').then( //todo: diff in dev mode
+      axios.get('/lists').then( //todo: diff in dev mode
         data0 => {
           // console.log(data.data);
           this.setState({album:data0.data});
-          axios.get(serverURL+'/list/'+data0.data[0]).then(
+          axios.get('/list/'+data0.data[0]).then(
             data1 => {
               // console.log(data.data);
               this.setState({

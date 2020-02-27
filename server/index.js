@@ -1,7 +1,7 @@
 const express = require("express");
 const bParser = require("body-parser");
 const path = require("path");
-const port = 3050;
+const port = process.env.PORT || 3050;
 const ctrl = require("./ctrl");
 process.env.GOOGLE_APPLICATION_CREDENTIALS = './apikey/key.json';
 
@@ -12,11 +12,6 @@ app.use("/", express.static(path.join(__dirname, "../client/dist")));
 app.listen(port, () => {
   console.log("server online:" + port);
 });
-
-// app.get("/server/test", (req, res) => {
-//   console.log("visited");
-//   res.status(200).send(":" + port + " is watching you");
-// });
 
 app.post("/addlist/:name",ctrl.add);
 
